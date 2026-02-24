@@ -4,7 +4,7 @@ Pernah nggak sih habis makan bareng temen tapi ribut gara-gara hitung tagihan? S
 
 Kelompok 21
 
-Ketua Kelompok : Lisa Olivia
+Ketua Kelompok : Lisa Olivia Putri Maharani (23/519241/TK/57250)
 
 Anggota 1 : Syahrul
 
