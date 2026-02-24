@@ -3,5 +3,7 @@ Pernah nggak sih habis makan bareng temen tapi ribut gara-gara hitung tagihan? S
 
 Kelompok 21
 Ketua Kelompok : Lisa Olivia
+
 Anggota 1 : Syahrul
+
 Anggota 2 : Jonathan Alvarado Panjaitan (23/515661/TK/56706)
