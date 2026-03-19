@@ -50,7 +50,7 @@ export default defineConfig({
     allowedHosts: [
       'pope-objectives-strips-hiking.trycloudflare.com',
       '192.168.1.108',
-      'smarbill.shahwul.men'
+      'smartbill.shahwul.men'
     ]
   }
 })
