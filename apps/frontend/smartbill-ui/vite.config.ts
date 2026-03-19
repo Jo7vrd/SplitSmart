@@ -20,8 +20,8 @@ export default defineConfig({
         description: 'Aplikasi AI Split Bill',
         theme_color: '#ffffff',
         background_color: '#ffffff',
-        display: 'standalone', 
-        start_url: '/', 
+        display: 'standalone',
+        start_url: '/',
         icons: [
           {
             src: '/pwa-192x192.png',
@@ -45,8 +45,11 @@ export default defineConfig({
     ]
   },
   server: {
+    host: true,
+    port: 5173,
     allowedHosts: [
-      'setup-olympics-barcelona-consultants.trycloudflare.com'
+      'pope-objectives-strips-hiking.trycloudflare.com',
+      '192.168.1.108'
     ]
   }
 })

@@ -29,6 +29,7 @@ func ConnectDatabase() {
 		&User{},
 		&Category{},
 		&Transaction{},
+		&TransactionMember{},
 		&TransactionItem{},
 		&ItemSplit{},
 	)
@@ -41,4 +42,5 @@ func ConnectDatabase() {
 	DB = database
 
 	SeedDatabase()
+	SeedMockData()
 }
