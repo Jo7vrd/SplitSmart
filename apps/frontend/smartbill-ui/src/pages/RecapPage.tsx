@@ -99,7 +99,7 @@ export default function RecapPage({ onBack }: RecapPageProps) {
             <div className="px-5 mt-8">
                 <h2 className="text-[15px] font-bold text-gray-800 mb-4">Rincian per Kategori</h2>
 
-                <div className="bg-white rounded-3xl p-5 shadow-sm border border-black/5 flex flex-col gap-5 min-h-[200px]">
+                <div className="bg-white rounded-3xl p-5 shadow-sm border border-black/5 flex flex-col gap-5 min-h-50">
                     {isLoading ? (
                         <div className="animate-pulse flex flex-col gap-4">
                             {[1, 2, 3].map(i => (
