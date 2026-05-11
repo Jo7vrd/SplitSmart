@@ -83,8 +83,8 @@ export default function RecapPage({ onBack }: RecapPageProps) {
 
             {/* Header */}
             <div className="bg-[#1a5336] pt-14 pb-8 px-6 rounded-b-[2rem] shadow-md text-white relative">
-                <button onClick={onBack} className="absolute top-14 left-6 text-white/80 hover:text-white font-medium">
-                    ← Kembali
+                <button onClick={onBack} className="relative z-10 text-white block">
+                    <span className="text-5xl">‹</span>
                 </button>
                 <div className="text-center mt-6">
                     <p className="text-xs font-medium opacity-70 uppercase tracking-widest mb-1">Pengeluaranmu</p>

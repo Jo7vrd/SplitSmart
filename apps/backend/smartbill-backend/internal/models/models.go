@@ -23,20 +23,21 @@ func (base *Base) BeforeCreate(tx *gorm.DB) error {
 
 type User struct {
 	Base
-	Name         string              `json:"name"`
-	Username     string              `gorm:"uniqueIndex" json:"username"`
-	Email        string              `gorm:"uniqueIndex" json:"email"`
-	Phone        string              `json:"phone"`
-	Password     string              `json:"-"`
-	Transactions []Transaction       `gorm:"foreignKey:HostID"`
-	Memberships  []TransactionMember `gorm:"foreignKey:UserID"`
+	Name     string `json:"name"`
+	Username string `gorm:"uniqueIndex" json:"username"`
+	Email    string `gorm:"uniqueIndex" json:"email"`
+	Phone    string `json:"phone"`
+	Password string `json:"-"`
+
+	Transactions []Transaction       `gorm:"foreignKey:HostID;constraint:OnDelete:CASCADE;"`
+	Memberships  []TransactionMember `gorm:"foreignKey:UserID;constraint:OnDelete:SET NULL;"`
 }
 type Category struct {
 	Base
 	Name string `json:"name"`
 	Type string `json:"type"`
 
-	TransactionItems []TransactionItem `gorm:"foreignKey:CategoryID" json:"-"`
+	TransactionItems []TransactionItem `gorm:"foreignKey:CategoryID;constraint:OnDelete:SET NULL;" json:"-"`
 }
 
 type Transaction struct {
