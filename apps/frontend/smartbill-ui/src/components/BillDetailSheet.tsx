@@ -1,19 +1,32 @@
 import { useState, useEffect } from 'react'
+import { Utensils, ShoppingCart, Droplets, Receipt, Pill, Film, BookOpen, Car, Box, CheckCircle, AlertCircle, Copy, Check, Edit2, Trash2, Store } from 'lucide-react'
 import type { Bill, BillItem } from '../types'
 import { AVATAR_UNSELECTED } from '../utils/member'
 import { useLiveSplit } from '../hooks/useLiveSplit'
 import { authService } from '../services/authService'
 
-const CATEGORY_EMOJIS: Record<string, string> = {
-    "Makan": "🍱",
-    "Belanja": "🛒",
-    "Kebersihan": "🧼",
-    "Tagihan": "🧾",
-    "Kesehatan": "💊",
-    "Hiburan": "🎬",
-    "Pendidikan": "📚",
-    "Transportasi": "🚕",
-    "Lain-lain": "📦"
+const getCategoryIcon = (category: string) => {
+    const iconMap: Record<string, React.ReactNode> = {
+        "Makan": <Utensils className="w-4 h-4" />,
+        "Belanja": <ShoppingCart className="w-4 h-4" />,
+        "Kebersihan": <Droplets className="w-4 h-4" />,
+        "Tagihan": <Receipt className="w-4 h-4" />,
+        "Kesehatan": <Pill className="w-4 h-4" />,
+        "Hiburan": <Film className="w-4 h-4" />,
+        "Pendidikan": <BookOpen className="w-4 h-4" />,
+        "Transportasi": <Car className="w-4 h-4" />,
+        "Lain-lain": <Box className="w-4 h-4" />
+    }
+    return iconMap[category] || <Box className="w-4 h-4" />
+}
+
+const getMerchantIcon = (iconType: string) => {
+    switch (iconType) {
+        case 'shop':
+            return <Store className="w-6 h-6" />
+        default:
+            return <Store className="w-6 h-6" />
+    }
 }
 
 interface Props {
@@ -94,17 +107,17 @@ export default function BillDetailSheet({ bill, onClose }: Props) {
         const success = await lockRoom()
         if (!success) return
 
-        let text = `🧾 *Rekap Tagihan: ${bill.name}*\n`
-        text += `📅 ${bill.date}\n\n`
+        let text = `*Rekap Tagihan: ${bill.name}*\n`
+        text += `${bill.date}\n\n`
 
         memberTotals.forEach(({ member, total }) => {
-            const status = member.hasPaid ? '✅ Lunas' : '💸 Belum bayar'
-            text += `👤 *${member.name}*: Rp ${total.toLocaleString('id-ID')} (${status})\n`
+            const status = member.hasPaid ? 'Lunas' : 'Belum bayar'
+            text += `${member.name}: Rp ${total.toLocaleString('id-ID')} (${status})\n`
         })
 
         const grandTotal = items.reduce((acc, item) => acc + item.price, 0)
-        text += `\n💰 *Total Semua: Rp ${grandTotal.toLocaleString('id-ID')}*\n`
-        text += `🔗 Cek detail: https://smartbill.shahwul.men\n`
+        text += `\n*Total Semua: Rp ${grandTotal.toLocaleString('id-ID')}*\n`
+        text += `Cek detail: https://smartbill.shahwul.men\n`
 
         if (navigator.share) {
             try {
@@ -117,7 +130,7 @@ export default function BillDetailSheet({ bill, onClose }: Props) {
             }
         } else {
             navigator.clipboard.writeText(text)
-            alert('✅ Room Dikunci & Rekap berhasil disalin ke clipboard! Tinggal Paste di WA.')
+            alert('Room Dikunci & Rekap berhasil disalin ke clipboard! Tinggal Paste di WA.')
         }
         onClose()
     }
@@ -129,15 +142,15 @@ export default function BillDetailSheet({ bill, onClose }: Props) {
 
             {/* Sheet */}
             <div className="fixed bottom-0 left-0 right-0 z-50 bg-white rounded-t-3xl animate-slide-up max-h-[90dvh] flex flex-col">
-                <div className="flex justify-center pt-3 pb-1 flex-shrink-0">
+                <div className="flex justify-center pt-3 pb-1 shrink-0">
                     <div className="w-10 h-1 rounded-full bg-black/10" />
                 </div>
 
                 <div className="overflow-y-auto flex-1 px-5 pb-8">
                     {/* Header */}
                     <div className="flex items-center gap-3 py-4 border-b border-black/5">
-                        <div className="w-12 h-12 rounded-2xl bg-accent/10 flex items-center justify-center text-2xl flex-shrink-0">
-                            {bill.icon}
+                        <div className="w-12 h-12 rounded-2xl bg-[#1a5336] flex items-center justify-center text-amber-50 shrink-0">
+                            {getMerchantIcon(bill.icon)}
                         </div>
                         <div className="flex-1 min-w-0">
                             <h2 className="font-sans font-bold text-dark text-base">{bill.name}</h2>
@@ -150,7 +163,7 @@ export default function BillDetailSheet({ bill, onClose }: Props) {
                             className="flex items-center gap-1.5 bg-primary/10 px-3 py-1.5 rounded-full active:scale-95 transition-transform"
                         >
                             <span className="font-mono text-xs font-medium text-primary">{roomCode}</span>
-                            <span className="text-xs text-primary">{copied ? '✓' : '⎘'}</span>
+                            {copied ? <Check className="w-3.5 h-3.5 text-primary" /> : <Copy className="w-3.5 h-3.5 text-primary" />}
                         </button>
                     </div>
 
@@ -162,7 +175,7 @@ export default function BillDetailSheet({ bill, onClose }: Props) {
                             return (
                                 <div
                                     key={member.id}
-                                    className="relative flex items-center pr-3 pl-1 py-1 rounded-full border-2 flex-shrink-0 transition-all"
+                                    className="relative flex items-center pr-3 pl-1 py-1 rounded-full border-2 shrink-0 transition-all"
                                     style={{
                                         borderColor: paid ? member.color : member.color,
                                         background: paid ? member.color : 'transparent',
@@ -174,14 +187,14 @@ export default function BillDetailSheet({ bill, onClose }: Props) {
                                     >
                                         {/* Avatar-nya */}
                                         <div
-                                            className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 shadow-sm"
+                                            className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0 shadow-sm"
                                             style={{ background: paid ? 'rgba(255,255,255,0.3)' : member.color, color: 'white' }}
                                         >
-                                            {paid ? '✓' : member.initials}
+                                            {paid ? <Check className="w-4 h-4" /> : member.initials}
                                         </div>
 
                                         {/* Info Nama */}
-                                        <div className="min-w-[60px]">
+                                        <div className="min-w-15">
                                             {editingMemberId === member.id ? (
                                                 <input
                                                     autoFocus
@@ -199,7 +212,7 @@ export default function BillDetailSheet({ bill, onClose }: Props) {
                                                     style={{ color: paid ? 'white' : '#0E1311' }}
                                                 />
                                             ) : (
-                                                <p className="text-xs font-semibold leading-none truncate max-w-[80px]" style={{ color: paid ? 'white' : '#0E1311' }}>
+                                                <p className="text-xs font-semibold leading-none truncate max-w-20" style={{ color: paid ? 'white' : '#0E1311' }}>
                                                     {member.name}
                                                 </p>
                                             )}
@@ -214,14 +227,14 @@ export default function BillDetailSheet({ bill, onClose }: Props) {
                                         <div className="flex flex-col gap-1 border-l border-black/10 pl-2 ml-1">
                                             <button
                                                 onClick={(e) => { e.stopPropagation(); setEditingMemberId(member.id); setEditingMemberName(member.name) }}
-                                                className="text-[10px] opacity-40 hover:opacity-100 transition-opacity"
+                                                className="opacity-40 hover:opacity-100 transition-opacity"
                                                 style={{ color: paid ? 'white' : 'black' }}
-                                            >✎</button>
+                                            ><Edit2 className="w-3.5 h-3.5" /></button>
                                             <button
                                                 onClick={(e) => { e.stopPropagation(); deleteMemberWS(member.id) }}
-                                                className="text-[10px] opacity-40 hover:text-red-500 transition-colors"
+                                                className="opacity-40 hover:text-red-500 transition-colors"
                                                 style={{ color: paid ? 'white' : 'black' }}
-                                            >✕</button>
+                                            ><Trash2 className="w-3.5 h-3.5" /></button>
                                         </div>
                                     )}
                                 </div>
@@ -230,7 +243,7 @@ export default function BillDetailSheet({ bill, onClose }: Props) {
 
                         {/* Tombol Tambah Teman */}
                         {isAddingMember ? (
-                            <div className="flex items-center gap-2 px-3 py-2 rounded-full border-2 border-dashed border-gray-300 flex-shrink-0 bg-gray-50 h-[52px]">
+                            <div className="flex items-center gap-2 px-3 py-2 rounded-full border-2 border-dashed border-gray-300 shrink-0 bg-gray-50 h-13">
                                 <input
                                     autoFocus
                                     type="text"
@@ -246,12 +259,12 @@ export default function BillDetailSheet({ bill, onClose }: Props) {
                                     }}
                                     className="w-20 text-xs font-semibold outline-none bg-transparent text-gray-700 placeholder-gray-400"
                                 />
-                                <button onClick={() => setIsAddingMember(false)} className="text-gray-400 hover:text-red-500 text-xs font-bold px-1">✕</button>
+                                <button onClick={() => setIsAddingMember(false)} className="text-gray-400 hover:text-red-500 text-xs font-bold px-1"><Trash2 className="w-3.5 h-3.5" /></button>
                             </div>
                         ) : (
                             <button
                                 onClick={() => setIsAddingMember(true)}
-                                className="flex items-center justify-center px-4 rounded-full border-2 border-dashed border-gray-300 text-gray-500 text-xs font-bold flex-shrink-0 hover:bg-gray-50 transition-colors h-[52px]"
+                                className="flex items-center justify-center px-4 rounded-full border-2 border-dashed border-gray-300 text-gray-500 text-xs font-bold shrink-0 hover:bg-gray-50 transition-colors h-13"
                             >
                                 + Teman
                             </button>
@@ -266,10 +279,10 @@ export default function BillDetailSheet({ bill, onClose }: Props) {
                                 {/* Baris atas: emoji + nama + harga + aksi */}
                                 <div className="flex items-center gap-3 mb-1.5">
 
-                                    {/* Emoji kategori */}
-                                    <div className="relative flex-shrink-0">
-                                        <div className="w-8 h-8 rounded-xl bg-black/5 flex items-center justify-center text-sm">
-                                            {CATEGORY_EMOJIS[item.category?.name || 'Lain-lain'] || '📦'}
+                                    {/* Icon kategori */}
+                                    <div className="relative shrink-0">
+                                        <div className="w-8 h-8 rounded-xl bg-black/5 flex items-center justify-center text-dark/60">
+                                            {getCategoryIcon(item.category?.name || 'Lain-lain')}
                                         </div>
                                         {isMeHost && (
                                             <select
@@ -277,9 +290,15 @@ export default function BillDetailSheet({ bill, onClose }: Props) {
                                                 value={item.category?.name || 'Lain-lain'}
                                                 onChange={(e) => updateItemCategory(item.id, e.target.value)}
                                             >
-                                                {Object.keys(CATEGORY_EMOJIS).map(cat => (
-                                                    <option key={cat} value={cat}>{CATEGORY_EMOJIS[cat]} {cat}</option>
-                                                ))}
+                                                <option value="Makan">Makan</option>
+                                                <option value="Belanja">Belanja</option>
+                                                <option value="Kebersihan">Kebersihan</option>
+                                                <option value="Tagihan">Tagihan</option>
+                                                <option value="Kesehatan">Kesehatan</option>
+                                                <option value="Hiburan">Hiburan</option>
+                                                <option value="Pendidikan">Pendidikan</option>
+                                                <option value="Transportasi">Transportasi</option>
+                                                <option value="Lain-lain">Lain-lain</option>
                                             </select>
                                         )}
                                     </div>
@@ -304,9 +323,9 @@ export default function BillDetailSheet({ bill, onClose }: Props) {
                                             />
                                             <button
                                                 onClick={saveEdit}
-                                                className="bg-primary text-white text-xs font-bold px-3 rounded-xl active:scale-95 transition-transform"
+                                                className="bg-primary text-white text-xs font-bold px-3 rounded-xl active:scale-95 transition-transform flex items-center gap-1"
                                             >
-                                                ✓
+                                                <Check className="w-3.5 h-3.5" />
                                             </button>
                                         </div>
                                     ) : (
@@ -317,7 +336,7 @@ export default function BillDetailSheet({ bill, onClose }: Props) {
                                             >
                                                 {item.name}
                                             </span>
-                                            <div className="flex items-center gap-3 flex-shrink-0">
+                                            <div className="flex items-center gap-3 shrink-0">
                                                 <span className="font-mono text-sm font-medium text-dark/50">
                                                     {item.price.toLocaleString('id-ID')}
                                                 </span>
@@ -325,15 +344,15 @@ export default function BillDetailSheet({ bill, onClose }: Props) {
                                                     <div className="flex gap-1">
                                                         <button
                                                             onClick={() => startEdit(item)}
-                                                            className="w-6 h-6 rounded-lg bg-black/5 flex items-center justify-center text-dark/40 hover:text-primary hover:bg-primary/10 transition-all text-xs"
+                                                            className="w-6 h-6 rounded-lg bg-black/5 flex items-center justify-center text-dark/40 hover:text-primary hover:bg-primary/10 transition-all"
                                                         >
-                                                            ✎
+                                                            <Edit2 className="w-3.5 h-3.5" />
                                                         </button>
                                                         <button
                                                             onClick={() => deleteItemWS(item.id)}
-                                                            className="w-6 h-6 rounded-lg bg-black/5 flex items-center justify-center text-dark/40 hover:text-red-500 hover:bg-red-50 transition-all text-xs"
+                                                            className="w-6 h-6 rounded-lg bg-black/5 flex items-center justify-center text-dark/40 hover:text-red-500 hover:bg-red-50 transition-all"
                                                         >
-                                                            ✕
+                                                            <Trash2 className="w-3.5 h-3.5" />
                                                         </button>
                                                     </div>
                                                 )}
@@ -388,7 +407,7 @@ export default function BillDetailSheet({ bill, onClose }: Props) {
                         {memberTotals.map(({ member, total }) => (
                             <div key={member.id} className="flex items-center justify-between py-1.5">
                                 <div className="flex items-center gap-2">
-                                    <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: member.color }} />
+                                    <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ background: member.color }} />
                                     <span className="text-sm font-sans text-dark">{member.name}</span>
                                     {member.hasPaid && (
                                         <span className="text-[10px] font-medium px-2 py-0.5 rounded-full text-white" style={{ background: member.color }}>
@@ -410,8 +429,8 @@ export default function BillDetailSheet({ bill, onClose }: Props) {
                     </div>
 
                     {/* CTA */}
-                    <button onClick={handleCompleteAndShare} className="w-full mt-5 bg-[#1a5336] text-white font-sans font-semibold py-4 rounded-2xl active:scale-[0.98] transition-transform">
-                        ✓ Selesai & Bagikan
+                    <button onClick={handleCompleteAndShare} className="w-full mt-5 bg-[#1a5336] text-white font-sans font-semibold py-4 rounded-2xl active:scale-[0.98] transition-transform flex items-center justify-center gap-2">
+                        <Check className="w-5 h-5" /> Selesai & Bagikan
                     </button>
 
                 </div>

@@ -29,7 +29,7 @@ export function mapBillItem(raw: any): BillItem {
 export function mapBill(raw: any): Bill {
     return {
         id: raw.id,
-        icon: '🍽️',
+        icon: 'shop',
         name: raw.merchant_name,
         date: new Date(raw.created_at).toLocaleDateString('id-ID', {
             day: 'numeric', month: 'short', year: 'numeric'

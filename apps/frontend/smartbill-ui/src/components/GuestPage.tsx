@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Zap } from 'lucide-react'
 import { fetchBillFromBackend, joinRoomGuest } from '../services/billService'
 import BillDetailSheet from './BillDetailSheet'
 import type { Bill } from '../types'
@@ -82,9 +83,9 @@ export default function GuestPage({ onBackToLogin }: { onBackToLogin: () => void
                         <button
                             onClick={handleJoin}
                             disabled={loading || roomCode.length < 5 || !name}
-                            className="w-full bg-primary text-white font-bold py-4 rounded-2xl mt-1 active:scale-[0.98] transition-all disabled:opacity-50"
+                            className="w-full bg-primary text-white font-bold py-4 rounded-2xl mt-1 active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
                         >
-                            {loading ? 'Masuk...' : 'Gas Bayar! 🚀'}
+                            {loading ? 'Masuk...' : <>Gas Bayar! <Zap className="w-4 h-4" /></>}
                         </button>
 
                         {/* Divider */}

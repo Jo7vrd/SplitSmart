@@ -23,7 +23,7 @@ export function useLiveSplit(bill: Bill | null) {
         const WS_URL = import.meta.env.VITE_WS_URL || 'ws://localhost:8080'
         const socketUrl = `${WS_URL}/ws/room/${roomCode}`
         ws.current = new WebSocket(socketUrl)
-        ws.current.onopen = () => console.log('✅ Connected to Live Split Room:', roomCode)
+        ws.current.onopen = () => console.log('Connected to Live Split Room:', roomCode)
 
         ws.current.onmessage = async (event) => {
             const msg = JSON.parse(event.data)

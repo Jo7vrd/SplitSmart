@@ -32,7 +32,7 @@ export const fetchBillFromBackend = async (roomCode: string): Promise<Bill | nul
             date: new Date(data.created_at).toLocaleDateString('id-ID', {
                 day: 'numeric', month: 'short', year: 'numeric'
             }),
-            icon: '🍽️',
+            icon: 'shop',
 
             members: data.members.map((m: any) => ({
                 id: m.id,
@@ -60,7 +60,7 @@ export const fetchBillFromBackend = async (roomCode: string): Promise<Bill | nul
         return formattedBill
 
     } catch (error) {
-        console.error("❌ Error fetchBillFromBackend:", error)
+        console.error("Error fetchBillFromBackend:", error)
         return null
     }
 }
@@ -92,7 +92,7 @@ export const fetchUserBills = async (): Promise<Bill[]> => {
             date: new Date(room.created_at).toLocaleDateString('id-ID', {
                 day: 'numeric', month: 'short', year: 'numeric'
             }),
-            icon: '🍽️',
+            icon: 'shop',
             members: [],
             items: []
         }))
@@ -100,7 +100,7 @@ export const fetchUserBills = async (): Promise<Bill[]> => {
         return userBills
 
     } catch (error) {
-        console.error("❌ Error fetchUserBills:", error)
+        console.error("Error fetchUserBills:", error)
         return []
     }
 }
@@ -123,7 +123,7 @@ export const joinRoomSelf = async (roomCode: string): Promise<boolean> => {
 
         return true
     } catch (error: any) {
-        alert(`❌ ${error.message}`)
+        alert(`Error: ${error.message}`)
         return false
     }
 }
@@ -142,7 +142,7 @@ export const joinRoomGuest = async (roomCode: string, name: string): Promise<boo
         }
         return true
     } catch (error: any) {
-        alert(`❌ ${error.message}`)
+        alert(`Error: ${error.message}`)
         return false
     }
 }

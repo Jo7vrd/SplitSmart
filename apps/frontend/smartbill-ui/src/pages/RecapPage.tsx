@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Utensils, ShoppingCart, Droplets, Receipt, Pill, Film, BookOpen, Car, Box, Lightbulb, Smile } from 'lucide-react'
 import { authService } from '../services/authService'
 import { fetchUserBills, fetchBillFromBackend } from '../services/billService'
 
@@ -6,9 +7,19 @@ interface RecapPageProps {
     onBack: () => void
 }
 
-const CATEGORY_EMOJIS: Record<string, string> = {
-    "Makan": "🍱", "Belanja": "🛒", "Kebersihan": "🧼", "Tagihan": "🧾",
-    "Kesehatan": "💊", "Hiburan": "🎬", "Pendidikan": "📚", "Transportasi": "🚕", "Lain-lain": "📦"
+const getCategoryIcon = (category: string) => {
+    const iconMap: Record<string, React.ReactNode> = {
+        "Makan": <Utensils className="w-5 h-5" />,
+        "Belanja": <ShoppingCart className="w-5 h-5" />,
+        "Kebersihan": <Droplets className="w-5 h-5" />,
+        "Tagihan": <Receipt className="w-5 h-5" />,
+        "Kesehatan": <Pill className="w-5 h-5" />,
+        "Hiburan": <Film className="w-5 h-5" />,
+        "Pendidikan": <BookOpen className="w-5 h-5" />,
+        "Transportasi": <Car className="w-5 h-5" />,
+        "Lain-lain": <Box className="w-5 h-5" />
+    }
+    return iconMap[category] || <Box className="w-5 h-5" />
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
@@ -64,7 +75,8 @@ export default function RecapPage({ onBack }: RecapPageProps) {
             const finalRecap = Object.keys(kategoriMap)
                 .map(key => ({
                     nama_asli: key,
-                    nama: `${CATEGORY_EMOJIS[key] || "📦"} ${key}`,
+                    nama: key,
+                    icon: getCategoryIcon(key),
                     jumlah: kategoriMap[key],
                     warna: CATEGORY_COLORS[key] || "bg-gray-400"
                 }))
@@ -82,7 +94,7 @@ export default function RecapPage({ onBack }: RecapPageProps) {
         <div className="min-h-screen bg-[#f7f9f8] font-sans pb-24">
 
             {/* Header */}
-            <div className="bg-[#1a5336] pt-14 pb-8 px-6 rounded-b-[2rem] shadow-md text-white relative">
+            <div className="bg-[#1a5336] pt-14 pb-8 px-6 rounded-b-4xl shadow-md text-white relative">
                 <button onClick={onBack} className="relative z-10 text-white block">
                     <span className="text-5xl">‹</span>
                 </button>
@@ -113,7 +125,12 @@ export default function RecapPage({ onBack }: RecapPageProps) {
                             return (
                                 <div key={index} className="flex flex-col gap-2">
                                     <div className="flex justify-between items-center text-sm font-semibold">
-                                        <span className="text-dark">{kat.nama}</span>
+                                        <div className="flex items-center gap-2.5 text-dark">
+                                            <div className="w-6 h-6 flex items-center justify-center text-dark/70">
+                                                {kat.icon}
+                                            </div>
+                                            <span>{kat.nama}</span>
+                                        </div>
                                         <span className="font-mono text-dark/70">
                                             Rp {(kat.jumlah / 1000).toLocaleString('id-ID')}k
                                         </span>
@@ -130,8 +147,9 @@ export default function RecapPage({ onBack }: RecapPageProps) {
                             )
                         })
                     ) : (
-                        <div className="text-center text-gray-400 text-sm mt-10">
-                            Belum ada pengeluaran bulan ini cuy. Mantap, hemat! 🤑
+                        <div className="text-center text-gray-400 text-sm mt-10 flex items-center justify-center gap-2">
+                            <Smile className="w-5 h-5 text-gray-400" />
+                            Belum ada pengeluaran bulan ini cuy. Mantap, hemat!
                         </div>
                     )}
                 </div>
@@ -141,7 +159,7 @@ export default function RecapPage({ onBack }: RecapPageProps) {
             {!isLoading && recapData.length > 0 && (
                 <div className="px-5 mt-6 animate-fade-in">
                     <div className="bg-emerald-50 border border-emerald-100 rounded-2xl p-4 flex gap-3 items-start">
-                        <span className="text-2xl">💡</span>
+                        <Lightbulb className="w-6 h-6 text-emerald-600 shrink-0 mt-0.5" />
                         <p className="text-xs text-emerald-800 leading-relaxed font-medium mt-1">
                             Bulan ini kamu paling boros di kategori <b>{recapData[0].nama_asli}</b>.
                             {recapData[0].nama_asli === 'Makan' ? ' Kurang-kurangin jajan di luar cuy, masak telor aja di rumah!' : ' Coba ditahan dulu nafsunya, mending duitnya ditabung!'}

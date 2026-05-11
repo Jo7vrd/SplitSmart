@@ -1,5 +1,6 @@
 // src/components/AuthPage.tsx
 import { useState } from 'react'
+import { DollarSign } from 'lucide-react'
 import { authService } from '../services/authService'
 
 export default function AuthPage({ onLoginSuccess, onGuestClick }: { onLoginSuccess: () => void, onGuestClick?: () => void }) {
@@ -34,9 +35,9 @@ export default function AuthPage({ onLoginSuccess, onGuestClick }: { onLoginSucc
 
                 {/* Logo & Title */}
                 <div className="text-center mb-8">
-                    <div className="w-14 h-14 bg-primary rounded-2xl mx-auto flex items-center justify-center text-2xl mb-4"
+                    <div className="w-14 h-14 bg-primary rounded-2xl mx-auto flex items-center justify-center text-white mb-4"
                         style={{ boxShadow: '0 0 0 4px white, 0 4px 16px rgba(34,82,62,0.25)' }}>
-                        💸
+                        <DollarSign className="w-7 h-7" />
                     </div>
                     <h1 className="font-serif text-2xl font-bold text-dark">SmartBill</h1>
                     <p className="text-sm text-dark/40 mt-1">

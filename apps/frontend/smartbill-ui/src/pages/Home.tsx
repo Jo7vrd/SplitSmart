@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { User, Link as LinkIcon } from 'lucide-react'
 import BillCard from '../components/BillCard'
 import BillDetailSheet from '../components/BillDetailSheet'
 import type { Bill } from '../types'
@@ -13,7 +14,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true)
 
   const currentUser = authService.getUser()
-  const userInitials = currentUser?.name ? currentUser.name.substring(0, 2).toUpperCase() : '👤'
+  const userInitials = currentUser?.name ? currentUser.name.substring(0, 2).toUpperCase() : 'U'
 
   const [isJoining, setIsJoining] = useState(false)
   const [roomCodeInput, setRoomCodeInput] = useState('')
@@ -75,9 +76,9 @@ export default function Home() {
     <div className="min-h-screen bg-white font-sans">
 
       {/* Navbar */}
-      <div className="relative flex justify-center items-center px-6 pt-14 pb-3">
+      <div className="relative flex justify-center items-center px-6 pt-8 pb-3">
         <span className="text-[30px] font-serif font-bold tracking-tight">SmartBill</span>
-        <div className="absolute right-6 w-10 h-10 rounded-full bg-emerald-700 flex items-center justify-center text-white text-sm font-bold shadow-md cursor-pointer" onClick={() => {
+        <div className="absolute right-6 w-10 h-10 rounded-full bg-[#1a5336] flex items-center justify-center text-white text-sm font-bold shadow-md cursor-pointer" onClick={() => {
           if (confirm('Mau logout cuy?')) authService.logout()
         }}>
           {userInitials}
@@ -109,7 +110,7 @@ export default function Home() {
       {/* Section Gabung Room */}
       <div className="px-4 mt-6">
         {isJoining ? (
-          <div className="flex items-center gap-2 p-1.5 bg-gray-50 border border-emerald-700/30 rounded-2xl shadow-inner animate-fade-in">
+          <div className="flex items-center gap-2 p-1.5 bg-gray-50 border border-[#1a5336]/30 rounded-2xl shadow-inner animate-fade-in">
             <input
               autoFocus
               type="text"
@@ -151,7 +152,7 @@ export default function Home() {
             onClick={() => setIsJoining(true)}
             className="w-full flex items-center justify-center gap-2 py-4 border-2 border-dashed border-gray-300 rounded-2xl text-gray-500 font-semibold text-sm hover:bg-gray-50 hover:border-[#1a5336]/40 hover:text-[#1a5336] transition-all active:scale-[0.98]"
           >
-            <span className="text-lg">🔗</span> Gabung Tagihan Teman
+            <LinkIcon className="w-5 h-5" /> Gabung Tagihan Teman
           </button>
         )}
       </div>
@@ -160,7 +161,7 @@ export default function Home() {
       <div className="px-4 mt-5 pb-28">
         <div className="flex justify-between items-center mb-3">
           <h2 className="text-[15px] font-semibold text-gray-800">Tagihan Terbaru</h2>
-          <span className="text-sm text-emerald-700 font-medium cursor-pointer">Lihat semua →</span>
+          <span className="text-sm text-[#1a5336] font-medium cursor-pointer">Lihat semua →</span>
         </div>
 
         <div className="flex flex-col gap-2">
