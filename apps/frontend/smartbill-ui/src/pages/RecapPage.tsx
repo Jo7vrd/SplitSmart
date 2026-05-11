@@ -82,7 +82,7 @@ export default function RecapPage({ onBack }: RecapPageProps) {
         <div className="min-h-screen bg-[#f7f9f8] font-sans pb-24">
 
             {/* Header */}
-            <div className="bg-[#1a5336] pt-14 pb-8 px-6 rounded-b-[2rem] shadow-md text-white relative">
+            <div className="bg-[#1a5336] pt-14 pb-8 px-6 rounded-b-4xl shadow-md text-white relative">
                 <button onClick={onBack} className="absolute top-14 left-6 text-white/80 hover:text-white font-medium">
                     ← Kembali
                 </button>
@@ -99,7 +99,7 @@ export default function RecapPage({ onBack }: RecapPageProps) {
             <div className="px-5 mt-8">
                 <h2 className="text-[15px] font-bold text-gray-800 mb-4">Rincian per Kategori</h2>
 
-                <div className="bg-white rounded-3xl p-5 shadow-sm border border-black/5 flex flex-col gap-5 min-h-[200px]">
+                <div className="bg-white rounded-3xl p-5 shadow-sm border border-black/5 flex flex-col gap-5 min-h-50">
                     {isLoading ? (
                         <div className="animate-pulse flex flex-col gap-4">
                             {[1, 2, 3].map(i => (

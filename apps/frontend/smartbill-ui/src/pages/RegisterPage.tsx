@@ -123,7 +123,7 @@ const handleSubmit = async () => {
                                 No. HP <span className="text-primary font-normal text-xs">(opsional)</span>
                             </label>
                             <div className="flex gap-2">
-                                <div className="bg-[#f7f9f8] border border-black/8 rounded-2xl px-4 py-3.5 text-sm font-semibold text-dark/50 flex-shrink-0">
+                                <div className="bg-[#f7f9f8] border border-black/8 rounded-2xl px-4 py-3.5 text-sm font-semibold text-dark/50 shrink-0">
                                     +62
                                 </div>
                                 <input
@@ -154,7 +154,7 @@ const handleSubmit = async () => {
                             className="flex items-center gap-2.5 pt-1 active:scale-95 transition-transform w-full text-left"
                         >
                             <div
-                                className="w-5 h-5 rounded-md border-2 flex items-center justify-center flex-shrink-0 transition-all"
+                                className="w-5 h-5 rounded-md border-2 flex items-center justify-center shrink-0 transition-all"
                                 style={{
                                     borderColor: agree ? '#22523E' : '#ccc',
                                     background: agree ? '#22523E' : 'white'

@@ -57,7 +57,7 @@ export default function ScanStruk({ onBack, onCapture }: Props) {
     }, [onCapture])
 
     return (
-        <div className="flex flex-col h-[100dvh] bg-dark text-white relative overflow-hidden">
+        <div className="flex flex-col h-dvh bg-dark text-white relative overflow-hidden">
 
             {/* Webcam */}
             <Webcam
@@ -101,7 +101,7 @@ export default function ScanStruk({ onBack, onCapture }: Props) {
 
                 {/* Scanner Frame */}
                 <div className="flex-1 flex items-center justify-center px-10">
-                    <div className="relative w-full aspect-[3/4]">
+                    <div className="relative w-full aspect-3/4">
                         {/* Corner brackets */}
                         <span className="absolute top-0 left-0 w-8 h-8 border-t-[3px] border-l-[3px] border-accent rounded-tl-sm" />
                         <span className="absolute top-0 right-0 w-8 h-8 border-t-[3px] border-r-[3px] border-accent rounded-tr-sm" />
@@ -109,7 +109,7 @@ export default function ScanStruk({ onBack, onCapture }: Props) {
                         <span className="absolute bottom-0 right-0 w-8 h-8 border-b-[3px] border-r-[3px] border-accent rounded-br-sm" />
 
                         {/* Scan line animation */}
-                        <span className="absolute left-0 right-0 h-[2px] bg-accent/60 animate-scan" />
+                        <span className="absolute left-0 right-0 h-0.5 bg-accent/60 animate-scan" />
                     </div>
                 </div>
 
